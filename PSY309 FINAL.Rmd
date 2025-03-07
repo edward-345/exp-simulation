@@ -1,0 +1,275 @@
+---
+title: "Influences of Depression Severity on the Sleep-Memory Relationship"
+author: "Junsyoung Edward Lee"
+date: "2024-12-02"
+output: pdf_document
+---
+# Introduction
+It is anecdotally well-known that a lack of good sleep can compromise optimal functioning of the brain. Many functions of a healthy brain are dependent on a good night's sleep, such as cognition, memory performance, mood, and many others. A great deal of research has been conducted on the relationship between optimal sleep and these factors, particularly memory (Drake et al., 2001; Oyandel et al., 2024), the focus of our study.
+
+Despite this, the current literature has only recently begun to notice the presence of major depressive disorder (MDD) acting upon the sleep-memory relationship. MDD and sleeping patterns are already widely recognized to be closely connected to each other (Sarris et al., 2020; Smagula et al., 2023), and there exists some support for a relationship between depression severity and memory performance (Ricciardiello et al., 2024; Niu et al., 2024). Thus, it is natural to infer the possibility of MDD acting as a moderator between sleep and memory performance and to examine this covariate. Furthermore, much of the current research on MDD and memory performance is exclusive to older-age samples and is thus difficult to generalize for a wider population (Lamar et al., 2012; McDougall, 2004). This clear gap in literature calls for a further examination of the interactions between these variables to further expand on our current understanding of the relationship sleep shares with memory consolidation and mood disorders. Our research thus seeks to confirm a relationship between hours of sleep, memory performance and MDD, and to determine to which degree does MDD severity moderate the relationship between sleep and memory. 
+
+As previously mentioned, the effects of sleep upon memory performance is already well-established in the current literature. Regardless of the underlying mechanisms, studies have demonstrated “clear dose-response relationships” between hours of sleep and memory performance (Drake at al., 2001). His study found that losing 8 hours of sleep at once led to lower memory task scores compared to gradually losing a total of 8 hours across several nights. In other words, participants were generally able to perform better in memory tasks the more sleep they had per night. Additonally, when considering the different experimental groups, the rate at which sleep loss accumulates is another factor to consider when examining its influences on cognitive performance. This relationship has been observed in animal studies as well. For instance, Oyandel et al.'s (2019) study demonstrated that rats who were deprived of sleep scored significantly worse on memory tasks involving spatial, temporal and contextual memory than the control group with a normal amount of sleep. It is very clear that sleep has a direct main effect on memory performance and is a significant predictor. However, many studies examining this relationship do not account for depression as a covariate, or their sample excludes participants afflicted with psychiatric disorders (Drake at al., 2001; Drosopoulos et al., 2005; Potkin & Bunney, 2012), raising questions about how unseen moderator variables could have an effect. Albeit these studies produce statistically significant results, a portion of unexplained variance in the response could potentially be attributed to depression severity especially when considering the context of the current literature.
+
+Depression and sleeping patterns are another frequently researched relationship, especially since irregular sleeping patterns are a symptom of major depressive disorder (American Psychiatric Association, 2013). Despite disturbed sleep being a product of MDD as a symptom, it is generally believed that they share a bidirectional relationship (Ricciardiello et al., 2024; Saunders et al., 2023). Studies have shown effectiveness in symptom-focused interventions, demonstrating treatment strategies that focus on restoring healthy circadian rhthym to succesfully reduce MDD severity. For instance, Saunders et al., (2023) sought out to confirm this bidirectional relationship by analyzing a sample 17,332 adults receiving depression treatment services. Their random-intercept cross-lagged panel model confirmed a significant effect of improved sleep reducing depression severity, although the inverse was stronger in effect. Additionally, the correlation between sleep and depression strengthened as treatments progressed, further evidencing the strong connection between these variables. Furthermore, other studies have shown this same effect occurring from insomnia treatment. A 2023 secondary analysis on a randomized control trial for mental health disorder symptoms and the Transdiagnostic Intervention for Sleep and Circadian Dysfunction (TranS-C) found significant relationships between depression symptoms and healthy sleep patterns. A follow-up analysis six months later found increases in interdaily sleep stability and decreases in insomnia severity to be correlated with reduced MDD symptoms for those from the TranS-C treatment group (Smagula et al., 2023). Regardless of these studies, there still remains debate on the directionality of the relationship between sleep and depression (Ran et al., 2024; Saunders et al., 2023). The current study will provide further research towards this topic, contributing towards finding a conclusive answer to this debate. Additionally, this highlights the significance of considering depression levels as a covariate in sleep studies to obtain more refined results and analytical models. 
+ 
+The current literature also generally comes to the consensus that the presence of depression can negatively impact memory performance. Unlike with sleep however, the relationship between memory and sleep is not as objectively defined and is dependent on several contexts. A notable study by Schweizer et al. (2018) exemplifies this phenomenon by administering cognitive tasks for distinct types of memory to its participants. The researchers found that participants with depression symptoms demonstrated worse memory for pictures presented in negative contexts compared to the control group participants, which was consistent with participant’s self-reported subjective memory performance. However, there were no significant differences between groups for a standardized verbal memory task, and hippocampal volume was not a significant predictor in any of the variables. Not only does this study establish that depression affects memory only in certain contexts, but it further solidifies the notion that the relationship between depression and memory is primarily cognitive and not neurobiological (Schweizer et al., 2018). This concept is further evidenced by a 2011 study examining differences between implicit and explicit memory performance in participants with depression. Reflective of how Schweizer’s study found depressive participants to believe that their own memory is compromised, there were only significant differences in memory performance scores between experimental and control groups when explicit memory was tested. In contrast, implicit memory task scores did not show signs of impaired conceptual priming amongst depressive and control participants (Mulligan, 2011). Although the connection between depression and memory performance involves more detail, these studies establish directional relationships between these variables. Considering the context-dependent nature of this relationship, it may be practical to examine how depression may interact with other variables as a covariate or moderator. 
+
+The present study will be examining the relationship between memory performance as a dependent variable and duration of sleep as the independent variable all while taking into consideration depression severity as a covariate. This research intends to further solidify the concepts of current sleep and memory consolidation theories and develop further understanding into how mood disorders, such as depression, may excaberate disturbed sleeping patterns and memory disorders.
+
+
+# Methods
+All data presented in the present study is computationally generated data from RStudio used to simulate an experimental study. None of the data presented is from real life.
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(reshape2)
+library(faux)
+library(truncnorm)
+library(ggplot2)
+options(scipen = 999)
+set.seed(69)
+
+#Generating data of random variables
+two <- data.frame(ID = c(1:25),
+                  sleep = 2,
+                  depression = round(rtruncnorm(25, a = 0, b = 63,
+                                          mean = 30, sd = 16)),
+                  prm = round(rtruncnorm(25, a = 0, b = 15,
+                                            mean = 2.5, sd = 0.8)))
+
+four <- data.frame(ID = c(1:25),
+                  sleep = 4,
+                  depression = round(rtruncnorm(25, a = 0, b = 63,
+                                          mean = 28, sd = 16)),
+                  prm = round(rtruncnorm(25, a = 0, b = 15,
+                                            mean = 4, sd = 0.75)))
+
+six <- data.frame(ID = c(1:25),
+                   sleep = 6,
+                   depression = round(rtruncnorm(25, a = 0, b = 63,
+                                           mean = 26, sd = 16)),
+                   prm = round(rtruncnorm(25, a = 0, b = 15,
+                                             mean = 5, sd = 0.75)))
+
+eight <- data.frame(ID = c(1:25),
+                   sleep = 8,
+                   depression = round(rtruncnorm(25, a = 0, b = 63,
+                                           mean = 24, sd = 16)),
+                   prm = round(rtruncnorm(25, a = 0, b = 15,
+                                             mean = 7, sd = 0.75)))
+
+#Data frame of variables
+study_data <- rbind(two, four, six, eight)
+
+breaks <- seq(0, 63, length.out = 7)
+labels <- c("Normal", "Mild Disturbance", "Borderline Clinical",
+            "Moderate", "Severe", "Extreme")
+
+#Depression as categorical 
+bdi <- cut(study_data$depression, 
+           breaks = breaks, 
+           labels = labels, 
+           include.lowest = TRUE)
+
+study_data <- study_data %>% 
+  mutate(bdi = bdi)
+
+#Hours as categorical
+hours <- as.factor(study_data$sleep)
+
+study_data <- study_data %>% 
+  mutate(hours = hours)
+
+study_data <- study_data %>% arrange(bdi, hours)
+```
+### Participants
+100 participants (50 women, 50 men) aged 21-35 years were recruited via online and paper flyer advertisements. Participants were required to be medically healthy as determined by a physician and free of drug or alchohol use history. Participants also were required to have 7-8 hours a night on average with waking and bedtimes that were not only consistent in routine, but with other participants as well. It should be noted that a minimum of 310 participants were required to obtain a power of 0.8, however budget constraints and strict participant requirements prevented this from occurring. Thus with the current sample size, the estimated power is 0.33, based on a sample size calculator for one-way analysis of variance power.
+
+### Materials
+The Beck Depression Inventory-II (BDI), a widely accepted self-report inventory used to measure the severity of depression in adults and adolescents was employed to diagnose and quantify a participant’s level of MDD (Beck et al., 1996). A nocturnal polysomnograph was used to monitor the sleep cycles of the participants to ensure they were asleep for the required duration, which measured various physiological factors such as brain activity via electroencephalography (EEG), eye movements for rapid-eye movement via electrooculography (EOG), etc. A modified version of the Probed-Recall Memory task (PRM) of 10 word pairs was adminstered to participants to measure short-term memory performance (Harris, 1975).
+
+### Procedure
+The experiment follows a between-subject design. Before any conditions were applied, all partipants were assessed for level of depression severity via the Beck Depression Inventory (BDI). This information was not revealed to the researchers, and would not be until after the experiment had been carried out to protect against biases. Participants were then randomly assigned to one of four experimental conditions of 2, 4 ,6 ot 8 hours of sleep. There were then instructed to go to sleep (with the nocturnal polysomnograph set up) at their respective times depending on their assigned duration of sleep to eventually wake up at the same time with all other participants at 8:00 a.m. For example, those who were assigned 8 hours of sleep would go to bed at 12:00 a.m. and those assigned 2 hours of sleep would go to bed at 6:00 a.m. 10 minutes after being woken up, participants were administered the Probed-Recall Memory Task (PRM). Participants were then given 2 minutes before being presented single words from the list of 10 word pairs. The number of correct words recalled was measured as PRM Task Scores.
+
+### Statistical Analyses
+A factorial analysis of variance (ANOVA) and multiple linear regression model was primarily used to analyze the data for significant relationships amongst the variables. Pearson’s correlation r, one-way ANOVA descriptive statistics was also used to further analyze data.
+
+
+# Results
+### Correlation
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+#Correlation
+cor_sleep <- cor.test(x = study_data$sleep, y = study_data$prm,
+                      method = 'pearson')
+
+cor_depression <- cor.test(x = study_data$depression, y = study_data$prm,
+                      method = 'pearson')
+
+#Barplot of hours of sleep and PRM scores
+main_barplot <- study_data %>%
+  group_by(hours) %>%
+  summarise(
+    n=n(),
+    mean=mean(prm),
+    sd=sd(prm)
+  ) %>% mutate(se=sd / sqrt(n)) %>%
+  ggplot(aes(x=hours,y=mean, colour = hours, fill= hours, shape=hours)) +
+  geom_bar(stat="identity",alpha=0.2)+
+  geom_errorbar(aes(x=hours,ymin=mean-se,ymax=mean+se),width=0.5)+
+  geom_jitter(data = study_data,aes(x=hours,y=prm),height=0, width=0.25,
+              size=3,alpha=0.5)+
+  scale_colour_manual(values = c("red","blue","green", "yellow3"))+
+  scale_fill_manual(values=c("red","blue","green", "yellow3"))+
+  theme_classic()+
+  theme(legend.position = "none")+
+  theme(plot.title = element_text(hjust=0.5))+
+  labs(
+    x="Hours of Sleep",
+    y="Probed-Recall Memory Task Scores",
+    title="Effect of Hours of Sleep on \n PRM Scores"
+  )
+
+ggsave("main_barplot.png",height=4,width=3,dpi=300)
+knitr::include_graphics("main_barplot.png")
+
+#Barplot of hours of sleep and PRM scores
+depression_barplot <- study_data %>%
+  group_by(bdi) %>%
+  summarise(
+    n=n(),
+    mean=mean(prm),
+    sd=sd(prm)
+  ) %>% mutate(se=sd / sqrt(n)) %>%
+  ggplot(aes(x=bdi,y=mean, colour = bdi, fill= bdi, shape=bdi)) +
+  geom_bar(stat="identity",alpha=0.2)+
+  geom_errorbar(aes(x=bdi,ymin=mean-se,ymax=mean+se),width=0.5)+
+  geom_jitter(data = study_data,aes(x=bdi,y=prm),height=0, width=0.25,
+              size=3,alpha=0.5)+
+  scale_colour_manual(values = c("red","blue","green", "yellow3",
+                                 "purple", "orange2"))+
+  scale_fill_manual(values=c("red","blue","green", "yellow3",
+                             "purple", "orange2"))+
+  theme_classic()+
+  theme(legend.position = "none")+
+  theme(plot.title = element_text(hjust=0.5))+
+  labs(
+    x="BDI Score",
+    y="Probed-Recall Memory Task Scores",
+    title="Effect of Depression on \n PRM Scores"
+  )
+
+ggsave("depression_barplot.png",height=4,width=3,dpi=300)
+
+knitr::include_graphics("depression_barplot.png")
+```
+In concurrence with the current literature, PRM scores was found to have a significant positive relationship with hours of sleep (*r* = 0.88, *p* < .05). A high r value signifies a very strong relationship, allowing us to infer that by the very least, better sleep is associated with higher memory performance. Depression severity was found to have a very weak negative relationship with PRM scores, yet this finding failed to be statistically significant (*r* = 0.11, *p* > .05). Despite this, the directionality of this relationship is consistent with the current literature, that depression can negatively impact memory performance.
+
+### One-way ANOVA
+```{r, echo=FALSE, inluce = FALSE}
+#One-way ANOVA
+hours_aov <- aov(prm ~ hours, data = study_data)
+summary(hours_aov)
+
+bdi_aov <- aov(prm ~ bdi, data = study_data)
+summary(bdi_aov)
+```
+A 4-level one-way ANOVA comparing the means of each level of hours of sleep (2, 4, 6 and 8 hours asleep) was modeled with PRM scores (*F*(3, 96) = 138.3, *p* < .05). The large F-value is indicative of a strong effect of hours of sleep upon memory performance, especially considering its statistical significance. For the covariate, a 6-level one-way ANOVA was modeled using the already existing Beck Depression Inventory (BDI) categories for a total of 6 categories ranging from “Normal” to “Extreme”, yet there were no statistically significant values (*F*(5, 94) = 0.641, *p* > .05). The low F-value is indicative of nearly no effect of BDI level on PRM scores. 
+
+### Factorial ANOVA
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+study_tukey <- aov(prm ~ hours + bdi, data = study_data)
+summary(study_tukey)
+TukeyHSD(study_tukey)
+
+#Interaction
+interactions_cat <- ggplot(data = study_data,
+                       aes(x = hours,y = prm,
+                           colour = bdi,
+                           group = bdi))+ 
+  geom_point(size = 3,alpha = 0.5)+
+  geom_line(linewidth = 1,alpha = 0.5)+
+  theme_classic()+
+  theme(legend.position.inside = c(0,1),legend.justification = c(0,1))+
+  scale_y_continuous(
+    breaks = 0:10, limits = c(0, 10)) +
+  labs(
+    x = "Hours of Sleep",
+    y = "PRM Task Score",
+    colour = "BDI Score") +
+  facet_wrap(~ bdi)
+
+ggsave("interactions_cat.png",height=4,width=3,dpi=300)
+
+knitr::include_graphics("interactions_cat.png")
+
+interactions <- ggplot(data = study_data,
+                           aes(x = hours,y = prm,
+                               colour = bdi,
+                               group = bdi))+ 
+  geom_point(size = 3,alpha = 0.5)+
+  geom_line(linewidth = 1,alpha = 0.5)+
+  theme_classic()+
+  theme(legend.position.inside = c(0,1),legend.justification = c(0,1))+
+  scale_y_continuous(
+    breaks = 0:10, limits = c(0, 10)) +
+  labs(
+    x = "Hours of Sleep",
+    y = "PRM Task Score",
+    colour = "BDI Score")
+
+ggsave("interactions.png",height=4,width=3,dpi=300)
+
+knitr::include_graphics("interactions.png")
+```
+A factorial ANOVA using both hours of sleep and BDI categories was modeled to further confirm the results of the one-way ANOVAs. Once again, hours of sleep was found to have a strong effect on PRM scores (*F*(3, 91) = 132.7, *p* < .05), and BDI level failed to find statistical significance (*F*(5, 91) = 0.217, *p* > .05).
+
+### Linear Regression
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+study_model <- lm(prm ~ sleep + depression + (sleep*depression),
+                  data = study_data)
+summary(study_model)
+```
+A multivariate linear regression model was fitted to include hours of sleep and BDI scores as predictors along with an interaction term. Consistent with the current findings, hours of sleep was found to be a significant predictor for higher PRM scores ($\beta$ = 0.55, *t*(96) = 5.42, *p* < .05). BDI scores was ngeaitve predictor, but only marginally most likely due to its lack of statistical significance ($\beta$ = -0.03, *t*(96) = -1.66, *p* > .05). We can infer from these coefficients that for every extra 2 hours of sleep, PRM scores will increase by 0.55. Such inference cannot be made for BDI scores alone due to its statistical insignifcance, but once again its directionality is consistent with findings of previous studies. Furthermore, the interaction between sleep and depression is a significant yet weak predictor ($\beta$ = 0.007, *t*(96) = 2.091, *p* < .05). This confirms that the relationship between sleep and PRM scores is influenced by depression, but only marginally.
+
+
+# Discussion
+The results and their data analyses are indicative of findings that are mostly consistent with findings from previous studies. Hours of sleep was confirmed to have significant relationships with PRM scores, establishing that optimal hours of sleep may promote memory performance. Although the nature of this study prevents causal inferences to be made in certainty, the linear regression model allows us to interpret hours of sleep as a significant predictor of memory performance. It can be confidently stated that these finding provide further confirmation upon the existing literature. 
+
+However, this study failed to produce any statistically significant result concerning the relationship between depression and PRM scores. This is most likely attributable to the type of memory tested on the participants; as previously mentioned depression levels affect memory performance only in specific contexts (Mulligan, 2011; Schweizer et al., 2018). Despite this, all analyses capable of indicating directionality found results consistent with the current literature that depression can have an interfering effect on memory performance. The effects of depression upon the relationship between sleep and memory is inconclusive as a result.  
+
+The outcome of this study calls for a further examination of depression as a covariate upon sleep studies. Despite the lack of statistical significance, many previous studies have already identified connections and statisitcially significant relationships depression levels share with both sleep and memory performance (Ricciardiello et al., 2024; Niu et al., 2024). With such strong signs of interactions between sleep, depression and memory, the subject matter cannot be simply dismissed as irrelevant. 
+
+
+# References
+Beck, A. T., Steer, R. A., & Brown, G. (1996). Beck Depression Inventory–II (BDI-II) [Database record]. APA PsycTests. https://doi.org/10.1037/t00742-000
+
+Drosopoulos, S., Wagner, U., & Born, J. (2005). Sleep enhances explicit recollection in recognition memory. Learning & Memory, 12(1), 44-51. https://doi.org/10.1101/lm.83805
+
+Hülür, G., Hertzog, C., Pearman, A. M., & Gerstorf, D. (2015). Correlates and moderators of change in subjective memory and memory performance: Findings from the Health and Retirement Study. Gerontology, 61(3), 232-240. http://myaccess.library.utoronto.ca/login?qurl=https%3A%2F%2Fwww.proquest.com%2Fscholarly-journals%2Fcorrelates-moderators-change-subjective-memory%2Fdocview%2F1753450810%2Fse-2%3Faccountid%3D14771
+
+Lamar, M., Charlton, R., Zhang, A., & Kumar, A. (2012). Differential associations between types of verbal memory and prefrontal brain structure in healthy aging and late life depression. Neuropsychologia, 50(8), 1823-1829. https://doi.org/10.1016/j.neuropsychologia.2012.04.007
+
+McDougall, G. J. (2004). Memory Self-Efficacy and Memory Performance among Black and White Elders. Nursing Research, 53(5), 323-331. https://doi.org/10.1097/00006199-200409000-00007
+
+Mulligan, N. W. (2011). Implicit memory and depression: Preserved conceptual priming in subclinical depression. Cognition and Emotion, 25(4), 730-739. https://doi.org/10.1080/02699931.2010.500479
+
+Niu, X., Utayde, M. F., Sanders, K. E. G., Cunningham, T. J., Zhang, G., Kensinger, E.
+A., & Payne, J. D. (2024). The effects of shared, depression-specific, and anxiety-
+specific internalizing symptoms on negative and neutral episodic memories following
+post-learning sleep. Cognitive, Affective & Behavioral Neuroscience,
+https://doi.org/10.3758/s13415-024-01209-5
+
+Potkin, K. T., & Bunney, W. E., Jr. (2012). Sleep improves memory: The effect of sleep on long term memory in early adolescence. PLoS ONE, 7(8), 4. https://doi.org/10.1371/journal.pone.0042191
+
+Ran, S., Qiu, X., Wang, S., Liu, B., & Liu, P. (2024). Causal relationship between sleep duration and depression: A bi-directional two-sample mendelian randomization study. Journal of Affective Disorders, 350, 822-823. https://doi.org/10.1016/j.jad.2024.01.171
+
+Ricciardiello, A., McKinnon, A. C., Mowszowski, L., LaMonica, H. M., Schrire, Z. M., Haroutonian, C., Lam, A., Hickie, I. B., D’Rozario, A., & Naismith, S. L. (2024).
+Assessing sleep architecture and cognition in older adults with depressive symptoms attending a memory clinic.Journal of Affective Disorders,348, 35-43. https://doi.org/10.1016/j.jad.2023.12.032
+
+Saunders, R., Liu, Y., Delamain, H., O'Driscoll, C., Naqvi, S. A., Singh, S., Stott, J., Wheatley, J., Pilling, S., Cape, J., & Buckman, J. E. J. (2023). Examining bi-directional change in sleep and depression symptoms in individuals receiving routine psychological treatment. Journal of Psychiatric Research, 163, 1-8. https://doi.org/10.1016/j.jpsychires.2023.05.007
+
+Schweizer, S., Kievit, R. A., Emery, T., & Henson, R. N. (2018). Symptoms of depression in a large healthy population cohort are related to subjective memory complaints and memory performance in negative contexts. Psychological Medicine, 48(1), 104-114. https://doi.org/10.1017/S0033291717001519
+
+Smagula, S. F., Gasperetti, C. E., Buysse, D. J., Irwin, M. R., Krafty, R. T., Lim, S. E., Reynolds, C. F., McCall, W. V., & Harvey, A. G. (2023). Efficacy of the transdiagnostic intervention for sleep and circadian dysfunction for depression symptoms and sleep- wake disruption in older and younger adults: Secondary age-stratified analysis of a randomized controlled trial. The American Journal of Geriatric Psychiatry, https://doi.org/10.1016/j.jagp.2023.11.003
+
+
